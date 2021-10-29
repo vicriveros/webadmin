@@ -1,32 +1,7 @@
 <x-app-layout>
     <x-slot name="header"> </x-slot>
-    <div class="card mb-3">
-        <div class="card-header text-white bg-primary"> <h4> Listado de Marcas </h4></div>
-        <div class="card-body">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Marcas</li>
-                </ol>
-            </nav>
-            <div class="table-responsive">
-                <table class="table table-striped table-hover datatable-id" style="width:100%">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Habilitar</th>
-                            <th>Publicar</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
+    <x-list-body : name='Marcas' fields='nombre,habilitar,publicar'/>
+</x-app-layout>
 
 <script type="text/javascript">
     $(function () {
@@ -60,5 +35,3 @@
 
     });
 </script>
-
-</x-app-layout>
