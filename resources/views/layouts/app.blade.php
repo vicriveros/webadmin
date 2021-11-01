@@ -24,7 +24,8 @@
         <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
         <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> -->
         <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-
+        <script src="https://kit.fontawesome.com/4c657afdc9.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.tiny.cloud/1/d2y45evtmwrl9g4lzivvnftsoep3fvw2thh40r8419m3ug2e/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     </head>
     <body class="font-sans antialiased bg-light">
         <x-jet-banner />

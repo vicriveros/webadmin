@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Redirect;
 
 class MarcasController extends Controller
 {
@@ -21,7 +22,8 @@ class MarcasController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger">Delete</a>';
+                    $edit_route = route('marcas.edit', $row);
+                    $btn = '<a href="'.$edit_route.'" class="edit btn btn-primary"><i class="fas fa-pencil-alt"></i> </a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -38,7 +40,7 @@ class MarcasController extends Controller
      */
     public function create()
     {
-        //
+        return view('marcas.create');
     }
 
     /**
@@ -49,7 +51,11 @@ class MarcasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //guardar
+        $post = Marca::create($request->all()); 
+        
+        //volver
+        return Redirect::to("/marcas")->withSuccess('Crear con exito!');
     }
 
     /**
@@ -71,7 +77,7 @@ class MarcasController extends Controller
      */
     public function edit(Marca $marca)
     {
-        //
+        return view('marcas.edit', compact('marca'));
     }
 
     /**
@@ -83,7 +89,8 @@ class MarcasController extends Controller
      */
     public function update(Request $request, Marca $marca)
     {
-        //
+        $marca->update($request->all());
+        return back()->with('status', 'Actualizado con exito!');
     }
 
     /**
@@ -94,6 +101,8 @@ class MarcasController extends Controller
      */
     public function destroy(Marca $marca)
     {
-        //
+        $marca->delete();
+        return Redirect::to("/marcas")->withSuccess('Eliminado con exito!');
+        
     }
 }

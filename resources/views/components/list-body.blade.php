@@ -10,6 +10,17 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ $name }} </li>
                 </ol>
             </nav>
+            <div class="row justify-content-center"> 
+                <div class="col-4 mb-2 text-center"> 
+                    <a href="{{ route('marcas.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+                </div>
+            </div>
+            @if(Session::has('success'))
+                <div class="alert alert-success">
+                    {{Session::get('success')}}
+                </div>
+            @endif
+            
             <div class="table-responsive">
                 <table class="table table-striped table-hover datatable-id" style="width:100%">
                     <thead class="table-light">
@@ -18,7 +29,7 @@
                             @foreach($fields_array as $item)
                                 <th> {{ ucfirst($item) }} </th>
                             @endforeach
-                            <th>Opciones</th>
+                            <th>Editar</th>
                         </tr>
                     </thead>
                     <tbody>
