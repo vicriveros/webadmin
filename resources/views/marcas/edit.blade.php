@@ -37,44 +37,12 @@
                                         <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <label for="colFormLabel" class="col-sm-2 col-form-label fw-bold">Nombre</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="nombre" value="{{ old('nombre', $marca->nombre) }}" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="colFormLabel" class="col-sm-2 col-form-label fw-bold">Texto</label>
-                                    <div class="col-sm-10">
-                                        <textarea class="form-control" name="texto" rows="3"> {{ old('texto', $marca->texto) }} </textarea>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="colFormLabel" class="col-sm-2 col-form-label fw-bold">Habilitar</label>
-                                    <div class="col-sm-10">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="habilitar" value="Si" checked>
-                                            <label class="form-check-label" for="inlineRadio1">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="habilitar" value="No">
-                                            <label class="form-check-label" for="inlineRadio1">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="colFormLabel" class="col-sm-2 col-form-label fw-bold">Publicar</label>
-                                    <div class="col-sm-10">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="publicar" value="Si" checked>
-                                            <label class="form-check-label">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="publicar" value="No">
-                                            <label class="form-check-label">No</label>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                <x-input-text name="nombre" :model=$marca/>
+                                <x-input-textarea name="texto" :model=$marca/>
+                                <x-input-radio-sino name="habilitar" :model=$marca/>
+                                <x-input-radio-sino name="publicar" :model=$marca/>
+
                             </form>
                             </div> <!-- card body -->
                         </div>
