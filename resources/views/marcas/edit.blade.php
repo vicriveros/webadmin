@@ -47,6 +47,32 @@
                             </div> <!-- card body -->
                         </div>
                     </div> <!-- col-8 -->
+
+                    <div class="col-sm-4">
+                        <div class="card border">
+
+                            <div class="card-body">
+                                <form action="{{ route('imagenes.store') }}" method="post">
+                                
+                                <div class="row mb-3">
+                                    <div class="col-sm-12">
+                                        <input type="file" class="filepond" name="img_file[]" multiple data-allow-reorder="true" data-max-file-size="5MB" data-max-files="5">
+                                        <input type="hidden" name="relacion_tabla" value="marcas">
+                                        <input type="hidden" name="relacion_id" value="{{ $marca->id}}">
+                                        <input type="hidden" name="orden" value="0">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-10">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            </div> <!-- card body -->
+                        </div>
+                    </div> <!-- col-4 -->
+
                 </div><!-- container -->
                 
             </div>
@@ -58,6 +84,21 @@
         tinymce.init({
             selector: 'textarea',
             menubar: false,
+        });
+
+        // Get a reference to the file input element
+        const inputElement = document.querySelector('input[type="file"]');
+
+        // Create a FilePond instance
+        const pond = FilePond.create(inputElement);
+
+        FilePond.setOptions({
+            server: {
+                url: '/upload',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token(); }}'
+                }
+            }
         });
     </script>
 </x-app-layout>

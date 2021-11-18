@@ -15,6 +15,8 @@
         <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
         <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+
         @livewireStyles
 
         <!-- Scripts -->
@@ -26,6 +28,7 @@
         <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
         <script src="https://kit.fontawesome.com/4c657afdc9.js" crossorigin="anonymous"></script>
         <script src="https://cdn.tiny.cloud/1/d2y45evtmwrl9g4lzivvnftsoep3fvw2thh40r8419m3ug2e/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     </head>
     <body class="font-sans antialiased bg-light">
         <x-jet-banner />
