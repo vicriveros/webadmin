@@ -11,26 +11,6 @@ use Illuminate\Support\Facades\Storage;
 class ImagenesController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,10 +19,17 @@ class ImagenesController extends Controller
     public function store(Request $request)
     {
         foreach ($request->img_file as $imgfile) {
-            $temporaryfile = TemporaryFiles::where('filename', $imgfile)->first();
+            //calcular orden
+            $imgs = Imagenes::where('relacion_tabla', $request->relacion_tabla)
+                ->where('relacion_id', $request->relacion_id)
+                ->get()
+                ->count();
+            $orden = $imgs + 1;
 
             //guardar
+            $temporaryfile = TemporaryFiles::where('filename', $imgfile)->first();
             $img = Imagenes::create([
+                'orden' => $orden,
                 'url' => 'images/'.$temporaryfile->filename
             ] + $request->all()); 
 
@@ -56,37 +43,40 @@ class ImagenesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Imagenes  $imagenes
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Imagenes $imagenes)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Imagenes  $imagenes
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Imagenes $imagenes)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Imagenes  $imagenes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Imagenes $imagenes)
+    public function update(Request $request, $id)
     {
-        //
+        $imagen = Imagenes::find($id);
+
+        if ($request->order == 'up'){
+            $order1=$imagen->orden - 1; 
+            $order2=$imagen->orden;
+        }else if ($request->order == 'down'){
+            $order1=$imagen->orden + 1; 
+            $order2=$imagen->orden;
+        }
+
+        $cant = Imagenes::where('relacion_tabla', $imagen->relacion_tabla)
+                ->where('relacion_id', $imagen->relacion_id)
+                ->get()
+                ->count();
+
+        if(($order1 > 0) and ($order1 <= $cant)){
+          $imagen->update(['orden' => $order1]);
+
+        Imagenes::where('relacion_tabla', $imagen->relacion_tabla)
+            ->where('relacion_id', $imagen->relacion_id)
+            ->where('orden', $order1)
+            ->where('id', '!=', $id)
+            ->update(['orden' => $order2]);  
+        }
+        
+        return back()->with('status', 'Orden Actualizado!');
     }
 
     /**
@@ -95,8 +85,14 @@ class ImagenesController extends Controller
      * @param  \App\Models\Imagenes  $imagenes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Imagenes $imagenes)
+    public function destroy($id)
     {
-        //
+        $imagenes = Imagenes::find($id);
+        
+        //eliminar img
+        Storage::disk('public')->delete($imagenes->url);
+
+        $imagenes->delete();
+        return back()->with('status', 'Imagen eliminada correctamente!');
     }
 }

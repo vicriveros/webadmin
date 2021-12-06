@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Marca;
+use App\Models\Imagenes;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Redirect;
@@ -55,7 +56,7 @@ class MarcasController extends Controller
         $post = Marca::create($request->all()); 
         
         //volver
-        return Redirect::to("/marcas")->withSuccess('Crear con exito!');
+        return Redirect::to("/marcas")->withSuccess('Creado con exito!');
     }
 
     /**
@@ -77,7 +78,12 @@ class MarcasController extends Controller
      */
     public function edit(Marca $marca)
     {
-        return view('marcas.edit', compact('marca'));
+        $imgs = Imagenes::where('relacion_tabla', 'marcas')
+        ->where('relacion_id', $marca->id)
+        ->orderBy('orden', 'asc')
+        ->get();
+        
+        return view('marcas.edit', compact('marca', 'imgs'));
     }
 
     /**

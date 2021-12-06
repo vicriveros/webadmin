@@ -22,6 +22,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('marcas', MarcasController::class);
-Route::resource('imagenes', ImagenesController::class);
 
 Route::post('upload', [UploadController::class, 'store']);
+Route::post('imagenes', [ImagenesController::class, 'store'])->name('imagenes.store');
+Route::post('imagenes/update/{id}', [ImagenesController::class, 'update'])->name('imagenes.update');
+Route::delete('imagenes/delete/{id}', [ImagenesController::class, 'destroy'])->name('imagenes.destroy');
