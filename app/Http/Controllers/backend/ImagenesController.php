@@ -18,24 +18,26 @@ class ImagenesController extends Controller
      */
     public function store(Request $request)
     {
-        foreach ($request->img_file as $imgfile) {
-            //calcular orden
-            $imgs = Imagenes::where('relacion_tabla', $request->relacion_tabla)
-                ->where('relacion_id', $request->relacion_id)
-                ->get()
-                ->count();
-            $orden = $imgs + 1;
+        if($request->img_file[0] != null){
+            foreach ($request->img_file as $imgfile) {
+                //calcular orden
+                $imgs = Imagenes::where('relacion_tabla', $request->relacion_tabla)
+                    ->where('relacion_id', $request->relacion_id)
+                    ->get()
+                    ->count();
+                $orden = $imgs + 1;
 
-            //guardar
-            $temporaryfile = TemporaryFiles::where('filename', $imgfile)->first();
-            $img = Imagenes::create([
-                'orden' => $orden,
-                'url' => 'images/'.$temporaryfile->filename
-            ] + $request->all()); 
+                //guardar
+                $temporaryfile = TemporaryFiles::where('filename', $imgfile)->first();
+                $img = Imagenes::create([
+                    'orden' => $orden,
+                    'url' => 'images/'.$temporaryfile->filename
+                ] + $request->all()); 
 
-            if($temporaryfile){
-                Storage::move('imagenes/tmp/'.$temporaryfile->filename, 'public/images/'.$temporaryfile->filename);
-                $temporaryfile->delete();
+                if($temporaryfile){
+                    Storage::move('imagenes/tmp/'.$temporaryfile->filename, 'public/images/'.$temporaryfile->filename);
+                    $temporaryfile->delete();
+                }
             }
         }
         //volver
