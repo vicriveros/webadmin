@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Marca;
-use App\Models\Imagenes;
+use App\Models\Productos;
 use Illuminate\Http\Request;
+use App\Models\Imagenes;
 use DataTables;
 use Illuminate\Support\Facades\Redirect;
 
-class MarcasController extends Controller
+class ProductosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +19,11 @@ class MarcasController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Marca::latest()->get();
+            $data = Productos::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $edit_route = route('marcas.edit', $row);
+                    $edit_route = route('productos.edit', $row);
                     $btn = '<a href="'.$edit_route.'" class="edit btn btn-primary"><i class="fas fa-pencil-alt"></i> </a>';
                     return $btn;
                 })
@@ -31,7 +31,7 @@ class MarcasController extends Controller
                 ->make(true);
         }
       
-        return view('backend/marcas.index');
+        return view('backend/productos.index');
     }
 
     /**
@@ -41,7 +41,7 @@ class MarcasController extends Controller
      */
     public function create()
     {
-        return view('backend/marcas.create');
+        //
     }
 
     /**
@@ -52,20 +52,16 @@ class MarcasController extends Controller
      */
     public function store(Request $request)
     {
-        //guardar
-        $post = Marca::create($request->all()); 
-        
-        //volver
-        return Redirect::to("/marcas")->withSuccess('Creado con exito!');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Marca  $marca
+     * @param  \App\Models\Productos  $productos
      * @return \Illuminate\Http\Response
      */
-    public function show(Marca $marca)
+    public function show(Productos $productos)
     {
         //
     }
@@ -73,42 +69,34 @@ class MarcasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Marca  $marca
+     * @param  \App\Models\Productos  $productos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Marca $marca)
+    public function edit(Productos $productos)
     {
-        $imgs = Imagenes::where('relacion_tabla', 'marcas')
-        ->where('relacion_id', $marca->id)
-        ->orderBy('orden', 'asc')
-        ->get();
-        
-        return view('backend/marcas.edit', compact('marca', 'imgs'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Marca  $marca
+     * @param  \App\Models\Productos  $productos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Marca $marca)
+    public function update(Request $request, Productos $productos)
     {
-        $marca->update($request->all());
-        return back()->with('status', 'Actualizado con exito!');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Marca  $marca
+     * @param  \App\Models\Productos  $productos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Marca $marca)
+    public function destroy(Productos $productos)
     {
-        $marca->delete();
-        return Redirect::to("/marcas")->withSuccess('Eliminado con exito!');
-        
+        //
     }
 }

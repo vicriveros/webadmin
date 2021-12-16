@@ -18,6 +18,9 @@
                 <x-jet-nav-link href="{{ route('marcas.index') }}" :active="request()->routeIs('marcas.index')">
                     Marcas
                 </x-jet-nav-link>
+                <x-jet-nav-link href="{{ route('productos.index') }}" :active="request()->routeIs('productos.index')">
+                    Productos
+                </x-jet-nav-link>
             </ul>
 
             <!-- Right Side Of Navbar -->

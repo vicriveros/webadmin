@@ -22,6 +22,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('marcas', MarcasController::class);
+Route::resource('productos', ProductosController::class);
 
 Route::post('upload', [UploadController::class, 'store']);
 Route::post('imagenes', [ImagenesController::class, 'store'])->name('imagenes.store');

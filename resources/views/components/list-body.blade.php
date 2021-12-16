@@ -1,5 +1,6 @@
 @php
     $fields_array = explode(",", $fields);
+    $create_route = lcfirst($name).'.create';
 @endphp   
     <div class="card mb-3">
         <div class="card-header text-white bg-primary"> <h4> Listado de {{ $name }} </h4></div>
@@ -12,7 +13,7 @@
             </nav>
             <div class="row justify-content-center"> 
                 <div class="col-4 mb-2 text-center"> 
-                    <a href="{{ route('marcas.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+                    <a href="{{ route($create_route) }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
                 </div>
             </div>
             @if(Session::has('success'))
